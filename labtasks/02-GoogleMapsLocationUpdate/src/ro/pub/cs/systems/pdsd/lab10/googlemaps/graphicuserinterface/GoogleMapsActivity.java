@@ -264,11 +264,30 @@ public class GoogleMapsActivity extends Activity implements ConnectionCallbacks,
 
 		// TODO exercise 7a
 		// invoke the requestLocationUpdates() method from FusedLocationProviderApi class
+		LocationServices.FusedLocationApi.requestLocationUpdates(
+				  googleApiClient,
+				  locationRequest,
+				  this
+				);
+		
 		// enable the locationUpdatesStatus
+		locationUpdatesStatus = true;
+		
 		// enable the current location on Google Map
+		googleMap.setMyLocationEnabled(true);
+				
 		// update the locationUpdatesStatusButton text & color
+		locationUpdatesStatusButton.setText(getResources().getString(R.string.stop_location_updates));
+		locationUpdatesStatusButton.setBackground(getResources().getDrawable(R.color.green));
+		
 		// navigate to current position (lastLocation)
+		if (lastLocation != null) {
+			navigateToLocation(lastLocation);
+		}
 		// disable the latitudeEditText, longitudeEditText, navigateToLocationButton widgets
+		latitudeEditText.setEnabled(false);
+		longitudeEditText.setEnabled(false);
+		navigateToLocationButton.setEnabled(false);
 
 	}
 	
@@ -276,11 +295,25 @@ public class GoogleMapsActivity extends Activity implements ConnectionCallbacks,
 		
 		// TODO exercise 7b
 		// invoke the removeLocationUpdates() method from FusedLocationProviderApi class
+		LocationServices.FusedLocationApi.removeLocationUpdates(
+			    googleApiClient,
+			    this
+			  );
+		  
 		// disable the locationUpdatesStatus
+		locationUpdatesStatus = false;
+		
 		// disable the current location on Google Map
+		googleMap.setMyLocationEnabled(false);
+		
 		// update the locationUpdatesStatusButton text & color
+		locationUpdatesStatusButton.setText(getResources().getString(R.string.start_location_updates));
+		locationUpdatesStatusButton.setBackground(getResources().getDrawable(R.color.red));
+		
 		// enable the latitudeEditText, longitudeEditText, navigateToLocationButton widgets	and reset their content
-
+		latitudeEditText.setEnabled(true);
+		longitudeEditText.setEnabled(true);
+		navigateToLocationButton.setEnabled(true);
 	}
 	
 	@Override
